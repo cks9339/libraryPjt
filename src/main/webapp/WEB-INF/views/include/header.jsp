@@ -25,8 +25,16 @@
 				<li><a href="#"><i class="fa fa-map-marker"></i>95, Gasan digital 2-ro, Geumcheon-gu, Seoul, Republic of Korea</a></li>
 			</ul>
 			<ul class="header-links pull-right">
-				<li><a href="/join"><i class="fa fa-user-o"></i>Sign Up</a></li>
-				<li><a href="/login"><i class="fa fa-sign-in"></i>Login</a></li>
+			   <c:choose>
+			      <c:when test="${empty loginedMember}">
+			         <li><a href="/join"><i class="fa fa-user-o"></i>Sign Up</a></li>
+			         <li><a href="/login"><i class="fa fa-sign-in"></i>Login</a></li>
+			      </c:when>
+			      <c:otherwise>
+			         <li><a href="/member/${loginedMember.m_no}"><i class="fa fa-user-o"></i>Edit</a></li>
+			         <li><a href="/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+			      </c:otherwise>
+			   </c:choose>
 			</ul>
 		</div>
 	</div>

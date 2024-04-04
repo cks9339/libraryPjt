@@ -19,4 +19,16 @@
 			m_id = #{m_id}
 		</where>
 	</select>
+	
+	<select id="selectMemberAll" resultType="com.goodee.library.member.dto.MemberDto">
+		SELECT * FROM tbl_member;
+	</select>
+	
+	<update id="updateMember">
+		UPDATE tbl_member SET m_name =#{m_name},m_mail = #{m_mail} WHERE m_no = #{m_no};
+	</update>
+	
+	<select id="selectMno" resultType="com.goodee.library.member.dto.MemberDto" parameterType="com.goodee.library.member.dto.MemberDto">
+		select * from tbl_member where m_no = #{m_no}
+	</select>
 </mapper>

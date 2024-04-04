@@ -2,6 +2,9 @@ package com.goodee.library.member.dao;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.logging.log4j.LogManager;
@@ -76,6 +79,40 @@ public class MemberDao {
 		}
 		
 		return loginedDto;
+	}
+
+	public List<MemberDto> selectMemberAll() {
+		LOGGER.info("회원 목록 정보 전체 조회");
+		List<MemberDto> resultList = new ArrayList<>();
+		try {
+			resultList = sqlSession.selectList(namespace+"selectMemberAll");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return resultList;
+	}
+
+	public int updateMember(MemberDto dto) {
+		LOGGER.info("회원 업데이트");
+		int result = 0;
+		try {
+			result = sqlSession.update(namespace+"updateMember",dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public MemberDto selectMno(long m_no) {
+		LOGGER.info("다시 찾기");
+		MemberDto selectResult = new MemberDto();
+		try {
+			selectResult = sqlSession.selectOne(namespace+"selectMno",m_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return selectResult;
 	}
 	
 }
