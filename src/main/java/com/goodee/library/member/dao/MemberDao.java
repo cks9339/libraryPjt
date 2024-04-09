@@ -114,5 +114,16 @@ public class MemberDao {
 		}
 		return selectResult;
 	}
+
+	public int deleteMember(long m_no) {
+		LOGGER.info("회원 탈퇴");
+		int result = 0;
+		try {
+			result = sqlSession.update(namespace+"deleteMember",m_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 	
 }

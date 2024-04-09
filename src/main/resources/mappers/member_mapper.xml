@@ -31,4 +31,8 @@
 	<select id="selectMno" resultType="com.goodee.library.member.dto.MemberDto" parameterType="com.goodee.library.member.dto.MemberDto">
 		select * from tbl_member where m_no = #{m_no}
 	</select>
+	
+	<update id="deleteMember">
+		UPDATE tbl_member SET m_flag = 'N' WHERE m_no = #{m_no}
+	</update>
 </mapper>

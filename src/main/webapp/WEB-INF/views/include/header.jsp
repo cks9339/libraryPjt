@@ -33,6 +33,7 @@
 			      <c:otherwise>
 			         <li><a href="/member/${loginedMember.m_no}"><i class="fa fa-user-o"></i>Edit</a></li>
 			         <li><a href="/logout"><i class="fa fa-sign-out"></i>Logout</a></li>
+			         <li><a href="javascript:deleteMember(${loginedMember.m_no});"><i class="fa fa-trash"></i>Delete</a></li>
 			      </c:otherwise>
 			   </c:choose>
 			</ul>
@@ -70,3 +71,29 @@
 	<!-- /MAIN HEADER -->
 </header>
 <!-- /HEADER -->
+
+<script>
+   const deleteMember = function(mNo){
+      fetch('/member/'+mNo,{
+         method: 'delete'
+      })
+      .then(response => response.json())
+      .then(data =>{
+         if(data.res_code == '200'){
+            Swal.fire({
+              icon: 'success',
+              title: '성공' ,
+              text: data.res_msg
+            }).then((result)=>{
+               location.href='/';
+            });
+         } else{
+            Swal.fire({
+              icon: 'error',
+              title: '실패' ,
+              text: data.res_msg
+            });
+         }            
+      })   
+   }
+</script>

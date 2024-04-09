@@ -55,11 +55,17 @@ public class MemberService {
 		// dao 에게 memberDto 정보를 전달
 		MemberDto loginedMember = dao.selectMemberOne(dto);
 		if(loginedMember != null) {
-			session.setAttribute("loginedMember", loginedMember);
-			session.setMaxInactiveInterval(60*30);
-			// 로그인 성공 시점
-			map.put("res_code", "200");
-			map.put("res_msg", loginedMember.getM_name()+"님 환영합니다");
+			if(loginedMember.getM_flag().equals("N")) {
+				map.put("res_code", "409");
+				map.put("res_msg", "이미 탈퇴한 회원입니다.");
+			}else {
+				
+				session.setAttribute("loginedMember", loginedMember);
+				session.setMaxInactiveInterval(60*30);
+				// 로그인 성공 시점
+				map.put("res_code", "200");
+				map.put("res_msg", loginedMember.getM_name()+"님 환영합니다");
+			}
 			
 
 			
@@ -95,6 +101,27 @@ public class MemberService {
 		
 		return map;
 	}
+
+	public Map<String, String> deleteMember(long m_no, HttpSession session) {
+		LOGGER.info("delete멤버 접근");
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("res_code", "404");
+		map.put("res_msg", "오류 발생");
+		
+		int result = dao.deleteMember(m_no);
+		if(result>0) {
+			LOGGER.info("delete멤버 성공");
+			session.invalidate();
+			map.put("res_code", "200");
+			map.put("res_msg", "탈퇴 성공");
+		}
+		return map;
+	}
+	
+	// 1. deleteMember 메소드 구성
+	// 2. return map -> 초기갑 설정 후 결과에 따라서 변화
+	// 3. dao 에게 회원 정보 업데이트 요청
+	// 4. tbl_member m_flag 컬럼생성 ( 기본값 Y , 탈퇴 요청시 N)
 
 }
 
