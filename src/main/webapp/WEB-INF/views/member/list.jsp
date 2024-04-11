@@ -23,7 +23,7 @@
 						<!-- SignUp Form -->
 						<div class="billing-details">
 							<div class="section-title">
-								<h3 class="title">Login</h3>
+								<h3 class="title">List</h3>
 							</div>
 							<table class="table table-bordered">
 								<thead>

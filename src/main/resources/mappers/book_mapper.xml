@@ -52,4 +52,8 @@
 		UPDATE tbl_book SET b_name=#{b_name},b_writer=#{b_writer},b_mod_date=NOW(),b_thumbnail=#{b_thumbnail} WHERE b_no = #{b_no}
 	</update>
 	
+	<delete id="deleteBook" parameterType="long">
+		DELETE FROM tbl_book WHERE b_no = #{b_no}
+	</delete>
+	
 </mapper>

@@ -28,9 +28,11 @@
                <div class="col-md-7">
                   <!-- SignUp Form -->
                   <div class="billing-details">
-                     <div class="section-title">
-                        <h3 class="title">Book Edit</h3>
-                     </div>
+                        <div class="section-title">
+		                  <h3 class="title">Book Edit</h3>
+		                  <a class="review-link" id="delete_btn" href="#" onclick="return false;">&nbsp;delete</a>
+		               </div>
+                     
                      <form id="bookEditFrm" name="edit_book_form" enctype="multipart/form-data">
                         <input type="hidden" name="b_no" value="${bookDto.b_no}">
                         <input type="hidden" name="b_thumbnail" value="${bookDto.b_thumbnail}">
@@ -43,6 +45,7 @@
                         <div class="form-group">
                            <input id="b_thumbnail" type="file" name="file">
                         </div>
+
                         <button type="submit" class="primary-btn order-submit">Edit</button>
                      </form>
                   </div>
@@ -111,6 +114,32 @@
 
 		
 	})
+	
+	const deleteBtn = document.getElementById("delete_btn");
+   deleteBtn.addEventListener('click',(e)=>{
+      const bNo = form.b_no.value;
+      fetch('/book/'+bNo,{
+         method:'delete'
+      })
+      .then(response => response.json())
+      .then(data =>{
+         if(data.res_code == '200'){
+            Swal.fire({
+              icon: 'success',
+              title: '성공' ,
+              text: data.res_msg
+            }).then((result)=>{
+               location.href='/book';
+            });
+         } else{
+            Swal.fire({
+              icon: 'error',
+              title: '실패' ,
+              text: data.res_msg
+            });
+         }
+      })
+   });
 </script>
 </body>
 </html>

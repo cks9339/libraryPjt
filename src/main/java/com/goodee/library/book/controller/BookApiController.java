@@ -3,10 +3,13 @@ package com.goodee.library.book.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -85,4 +88,31 @@ public class BookApiController {
 		}
 		return map;
 	}
+	
+	// 도서정보삭제
+	@ResponseBody
+	@DeleteMapping("/book/{b_no}")
+	public Map<String, String> delete(@PathVariable long b_no , BookDto dto){
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("res_code", "404");
+		map.put("res_msg", "수정 실패");
+		dto = bookService.selectBookDetail(b_no);
+		LOGGER.info("dto 정보확인 :"+dto.getB_thumbnail());
+		int row = 0;
+		row = bookService.deleteBook(b_no);
+		
+		if(row>0) {
+			if(uploadFileService.delete(dto.getB_thumbnail())){
+				map.put("res_code", "200");
+				map.put("res_msg", "삭제 성공");
+			}
+			
+		}
+		
+		return map;
+	}
+	// 1. 데이터베이스에서삭제
+	// 2. 파일도 서버에서 삭제
+	// 3. 코드 수행결과를 프론트에게 전달
+	
 }

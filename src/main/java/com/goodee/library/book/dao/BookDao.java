@@ -2,6 +2,7 @@ package com.goodee.library.book.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,15 @@ public class BookDao {
 			row = sqlSession.update(namespace+"editBook",dto);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		return row;
+	}
+	public int deleteBook(long b_no) {
+		int row = 0;
+		try {
+			row = sqlSession.delete(namespace+"deleteBook",b_no);
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 		return row;
 	}

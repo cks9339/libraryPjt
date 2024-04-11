@@ -61,4 +61,9 @@ public class BookService {
 		return bookDao.editBook(dto);
 	}
 
+	public int deleteBook(long b_no) {
+		
+		return bookDao.deleteBook(b_no);
+	}
+
 }
